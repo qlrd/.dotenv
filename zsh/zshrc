@@ -4,6 +4,7 @@
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # 42 identity used by helix/scripts/42header.py (and shared editor tooling)
+# Override in ~/.zshrc.local on shared machines.
 export FT_LOGIN="${FT_LOGIN:-qlrd}"
 export FT_EMAIL="${FT_EMAIL:-qlrd@student.42.fr}"
 

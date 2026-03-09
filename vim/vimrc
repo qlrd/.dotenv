@@ -6,6 +6,7 @@ syntax on
 
 set number
 set relativenumber
+" Match helix terminal workflow (avoid accidental mouse edits)
 set mouse=
 set hidden
 set autoread
@@ -33,12 +34,24 @@ if exists('*plug#begin')
   Plug 'dense-analysis/ale'
   Plug 'preservim/nerdcommenter'
   call plug#end()
-
-  let g:ale_linters = {'c': ['norminette']}
-  let g:ale_c_norminette_executable = 'norminette'
-  let g:ale_lint_on_text_changed = 'never'
-  let g:ale_lint_on_insert_leave = 1
 endif
 
+" Quick manual norminette check for the current file
+command! Norm execute '!norminette ' . shellescape(expand('%:p'))
+
 " Reuse the same 42 header workflow as helix
-nnoremap <silent> <F1> :write<CR>:silent !python3 ~/.config/helix/scripts/42header.py "%:p"<CR>:edit!<CR>
+let s:header_script = ''
+if filereadable(expand('~/.config/helix/scripts/42header.py'))
+  let s:header_script = '~/.config/helix/scripts/42header.py'
+elseif filereadable(expand('~/.config/vim/scripts/42header.py'))
+  let s:header_script = '~/.config/vim/scripts/42header.py'
+endif
+
+if !empty(s:header_script)
+  function! s:Apply42Header()
+    update
+    execute '!python3 ' . fnameescape(expand(s:header_script)) . ' ' . shellescape(expand('%:p'))
+    edit!
+  endfunction
+  nnoremap <silent> <F1> :call <SID>Apply42Header()<CR>
+endif
