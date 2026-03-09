@@ -1,0 +1,37 @@
+# qlrd zsh config (portable across 42 machines)
+
+# Keep user overrides easy
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# 42 identity used by helix/scripts/42header.py (and shared editor tooling)
+export FT_LOGIN="${FT_LOGIN:-qlrd}"
+export FT_EMAIL="${FT_EMAIL:-qlrd@student.42.fr}"
+
+# PATH helpers (prepend only if directory exists and is not already present)
+path_prepend_if_dir() {
+  local dir="$1"
+  [[ -d "$dir" ]] || return 0
+  case ":$PATH:" in
+    *":$dir:"*) ;;
+    *) export PATH="$dir:$PATH" ;;
+  esac
+}
+
+path_prepend_if_dir "$HOME/.local/bin"
+path_prepend_if_dir "$HOME/bin"
+path_prepend_if_dir "$HOME/go/bin"
+
+# Editor compatibility: vim and helix side by side
+export EDITOR="${EDITOR:-vim}"
+export VISUAL="${VISUAL:-$EDITOR}"
+
+alias v='vim'
+alias vi='vim'
+alias hx='helix'
+alias ll='ls -lah'
+alias la='ls -A'
+
+# 42 / C convenience
+alias norm='norminette'
+alias gs='git status -sb'
+alias gd='git diff'

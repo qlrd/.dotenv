@@ -1,0 +1,44 @@
+" qlrd vim config (42 / norminette-friendly)
+
+set nocompatible
+filetype plugin indent on
+syntax on
+
+set number
+set relativenumber
+set mouse=
+set hidden
+set autoread
+set autowrite
+set updatetime=300
+
+" Keep behavior close to helix defaults
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set noexpandtab
+set textwidth=80
+set colorcolumn=80
+set nowrap
+
+" Ensure C files always follow 42 style
+augroup qlrd_c_style
+  autocmd!
+  autocmd FileType c setlocal tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab textwidth=80 colorcolumn=80
+augroup END
+
+" Basic plugin setup with vim-plug (optional, if installed)
+if exists('*plug#begin')
+  call plug#begin('~/.vim/plugged')
+  Plug 'dense-analysis/ale'
+  Plug 'preservim/nerdcommenter'
+  call plug#end()
+
+  let g:ale_linters = {'c': ['norminette']}
+  let g:ale_c_norminette_executable = 'norminette'
+  let g:ale_lint_on_text_changed = 'never'
+  let g:ale_lint_on_insert_leave = 1
+endif
+
+" Reuse the same 42 header workflow as helix
+nnoremap <silent> <F1> :write<CR>:silent !python3 ~/.config/helix/scripts/42header.py "%:p"<CR>:edit!<CR>
