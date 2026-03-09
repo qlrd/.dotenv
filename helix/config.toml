@@ -42,6 +42,11 @@ character = "┊"
 skip-levels = 1
 
 [keys.normal]
+"<F1>" = [
+    ":sh echo \"%{file_path_absolute}\" > ~/.cache/helix/file_path_absolute",
+    ":sh python3 ~/.config/helix/scripts/42header.py \"$(cat ~/.cache/helix/file_path_absolute)\"",
+    ":reload"
+]
 C-g = [
     ":sh echo \"%{file_path_absolute}\" > ~/.cache/helix/file_path_absolute",
     ":write-all", 

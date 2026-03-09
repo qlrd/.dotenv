@@ -3,6 +3,10 @@
 name = "c"
 indent = { tab-width = 4, unit = "\t" }
 auto-format = false
+language-servers = ["efm-langserver"]
+
+[language-server.efm-langserver]
+command = "/home/qlrd/go/bin/efm-langserver"
 
 [[language]]
 name = "rust"
