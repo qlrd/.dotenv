@@ -1,0 +1,8 @@
+inherits = "onedark"
+
+"ui.background" = { bg = "" }
+"ui.statusline" = { bg = "" }
+"ui.statusline.inactive" = { bg = "" }
+"ui.popup" = { bg = "" }
+"ui.window" = { bg = "" }
+"ui.help" = { bg = "" }

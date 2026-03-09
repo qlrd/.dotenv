@@ -1,0 +1,55 @@
+
+theme = "onedark_transparent"
+
+[editor]
+line-number = "relative"
+mouse = false
+auto-completion=true
+auto-save=true
+auto-format=true
+text-width=80
+rulers = [80]
+gutters = ["diff", "diagnostics", "line-numbers", "spacer"]
+soft-wrap.enable = true
+soft-wrap.max-indent-retain=80
+
+[editor.file-picker]
+hidden = false
+
+[editor.statusline]
+left = ["mode", "spinner", "file-modification-indicator", "read-only-indicator"]
+center = ["file-name"]
+right = ["diagnostics", "register", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+mode.normal = "LOCKED"
+mode.insert = "WORKING"
+mode.select = "VISUAL SEL"
+
+[editor.cursor-shape]
+normal = "hidden"
+insert = "bar"
+select = "block"
+
+[editor.lsp]
+enable=true
+auto-signature-help=true
+display-messages = true
+display-inlay-hints = true
+
+[editor.indent-guides]
+render = true
+character = "┊"
+skip-levels = 1
+
+[keys.normal]
+C-g = [
+    ":sh echo \"%{file_path_absolute}\" > ~/.cache/helix/file_path_absolute",
+    ":write-all", 
+    ":new", 
+    ":insert-output lazygit -p \"%sh{git -C ''%sh{dirname %sh{cat ~/.cache/helix/file_path_absolute}}'' rev-parse --show-toplevel}\"", 
+    ":buffer-close!", 
+    ":set mouse false", 
+    ":set mouse true",
+    ":redraw", 
+    ":reload-all"
+]
