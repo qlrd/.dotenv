@@ -2,14 +2,15 @@
 theme = "onedark_transparent"
 
 [editor]
-line-number = "relative"
+line-number = "absolute"
 mouse = false
 auto-completion=true
 auto-save=true
 auto-format=true
 text-width=80
+tab-width=4
 rulers = [80]
-gutters = ["diff", "diagnostics", "line-numbers", "spacer"]
+gutters = ["line-numbers", "diff", "diagnostics", "spacer"]
 soft-wrap.enable = true
 soft-wrap.max-indent-retain=80
 
