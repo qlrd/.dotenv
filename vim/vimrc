@@ -36,22 +36,21 @@ if exists('*plug#begin')
   call plug#end()
 endif
 
+" ALE: norminette inline diagnostics
+let g:ale_linters_explicit = 1
+let g:ale_linters = {'c': ['norminette'], 'cpp': []}
+let g:ale_c_norminette_executable = '/home/qlrd/.piscinne/bin/norminette'
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+let g:ale_echo_msg_format = '[norminette] %s'
+let g:ale_open_list = 0
+let g:ale_set_highlights = 1
+
 " Quick manual norminette check for the current file
 command! Norm execute '!norminette ' . shellescape(expand('%:p'))
 
-" Reuse the same 42 header workflow as helix
-let s:header_script = ''
-if filereadable(expand('~/.config/helix/scripts/42header.py'))
-  let s:header_script = '~/.config/helix/scripts/42header.py'
-elseif filereadable(expand('~/.config/vim/scripts/42header.py'))
-  let s:header_script = '~/.config/vim/scripts/42header.py'
-endif
-
-if !empty(s:header_script)
-  function! s:Apply42Header()
-    update
-    execute '!python3 ' . fnameescape(expand(s:header_script)) . ' ' . shellescape(expand('%:p'))
-    edit!
-  endfunction
-  nnoremap <silent> <F1> :call <SID>Apply42Header()<CR>
-endif
+" 42 header via pipe (mirrors Helix % + :pipe approach — no external file writes)
+function! s:Apply42Header()
+  execute '%!python3 ~/.config/helix/scripts/42header_pipe.py ' . shellescape(expand('%:p'))
+endfunction
+nnoremap <silent> <F1> :call <SID>Apply42Header()<CR>
