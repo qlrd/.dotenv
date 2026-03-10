@@ -49,12 +49,12 @@ skip-levels = 1
 [keys.normal]
 F1 = [
     ":write",
-    ":sh echo \"%{filename}\" > ~/.cache/helix/file_path_absolute",
+    ":sh echo \"%{%}\" > ~/.cache/helix/file_path_absolute",
     ":sh bash ~/.config/helix/scripts/42header.sh",
     ":reload"
 ]
 C-g = [
-    ":sh echo \"%{filename}\" > ~/.cache/helix/file_path_absolute",
+    ":sh echo \"%{%}\" > ~/.cache/helix/file_path_absolute",
     ":write-all", 
     ":new", 
     ":insert-output lazygit -p \"%sh{git -C ''%sh{dirname %sh{cat ~/.cache/helix/file_path_absolute}}'' rev-parse --show-toplevel}\"", 
