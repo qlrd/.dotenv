@@ -8,7 +8,6 @@ auto-completion=true
 auto-save=true
 auto-format=true
 text-width=80
-tab-width=4
 rulers = [80]
 gutters = ["line-numbers", "diff", "diagnostics", "spacer"]
 soft-wrap.enable = true
