@@ -1,0 +1,57 @@
+" qlrd vim config (42 / norminette-friendly)
+
+set nocompatible
+filetype plugin indent on
+syntax on
+
+set number
+set relativenumber
+" Match helix terminal workflow (avoid accidental mouse edits)
+set mouse=
+set hidden
+set autoread
+set autowrite
+set updatetime=300
+
+" Keep behavior close to helix defaults
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set noexpandtab
+set textwidth=80
+set colorcolumn=80
+set nowrap
+
+" Ensure C files always follow 42 style
+augroup qlrd_c_style
+  autocmd!
+  autocmd FileType c setlocal tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab textwidth=80 colorcolumn=80
+augroup END
+
+" Basic plugin setup with vim-plug (optional, if installed)
+if exists('*plug#begin')
+  call plug#begin('~/.vim/plugged')
+  Plug 'dense-analysis/ale'
+  Plug 'preservim/nerdcommenter'
+  call plug#end()
+endif
+
+" Quick manual norminette check for the current file
+command! Norm execute '!norminette ' . shellescape(expand('%:p'))
+
+" Reuse the same 42 header workflow as helix
+let s:header_script = ''
+if filereadable(expand('~/.config/helix/scripts/42header.py'))
+  let s:header_script = '~/.config/helix/scripts/42header.py'
+elseif filereadable(expand('~/.config/vim/scripts/42header.py'))
+  let s:header_script = '~/.config/vim/scripts/42header.py'
+endif
+
+if !empty(s:header_script)
+  function! s:Apply42Header()
+    update
+    execute '!python3 ' . fnameescape(expand(s:header_script)) . ' ' . shellescape(expand('%:p'))
+    edit!
+  endfunction
+  nnoremap <silent> <F1> :call <SID>Apply42Header()<CR>
+endif
