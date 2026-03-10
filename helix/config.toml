@@ -47,11 +47,19 @@ character = "┊"
 skip-levels = 1
 
 [keys.normal]
+F2 = [
+    "goto_line_start",
+    ":insert-output bash ~/.config/helix/scripts/docblock.sh"
+]
 F1 = [
     ":sh echo \"%{%}\" > ~/.cache/helix/file_path_absolute",
     "select_all",
     ":pipe python3 ~/.config/helix/scripts/42header_pipe.py \"$(cat ~/.cache/helix/file_path_absolute | tr -d '\\n')\""
 ]
+[keys.insert]
+A-ret = ["insert_newline", ":insert-output printf ' * '"]
+
+[keys.normal]
 C-g = [
     ":sh echo \"%{%}\" > ~/.cache/helix/file_path_absolute",
     ":write-all", 
