@@ -6,7 +6,7 @@ auto-format = false
 language-servers = ["efm-langserver"]
 
 [language-server.efm-langserver]
-command = "/home/qlrd/go/bin/efm-langserver"
+command = "efm-langserver"
 
 [[language]]
 name = "rust"
