@@ -48,10 +48,9 @@ skip-levels = 1
 
 [keys.normal]
 F1 = [
-    ":write",
     ":sh echo \"%{%}\" > ~/.cache/helix/file_path_absolute",
-    ":sh bash ~/.config/helix/scripts/42header.sh",
-    ":reload"
+    "%",
+    ":pipe python3 ~/.config/helix/scripts/42header_pipe.py \"$(cat ~/.cache/helix/file_path_absolute | tr -d '\\n')\""
 ]
 C-g = [
     ":sh echo \"%{%}\" > ~/.cache/helix/file_path_absolute",
