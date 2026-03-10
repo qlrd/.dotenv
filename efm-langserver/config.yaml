@@ -2,7 +2,7 @@ version: 2
 
 tools:
   norminette: &norminette
-    lint-command: "python3 ~/.config/helix/scripts/norminette_wrap.py ${INPUT}"
+    lint-command: "python3 $HOME/.config/helix/scripts/norminette_wrap.py ${INPUT}"
     lint-stdin: false
     lint-ignore-exit-code: true
     lint-formats:
