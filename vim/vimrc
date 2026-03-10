@@ -39,7 +39,7 @@ endif
 " ALE: norminette inline diagnostics
 let g:ale_linters_explicit = 1
 let g:ale_linters = {'c': ['norminette'], 'cpp': []}
-let g:ale_c_norminette_executable = '/home/qlrd/.piscinne/bin/norminette'
+let g:ale_c_norminette_executable = expand('~/.piscinne/bin/norminette')
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_echo_msg_format = '[norminette] %s'
@@ -51,6 +51,6 @@ command! Norm execute '!norminette ' . shellescape(expand('%:p'))
 
 " 42 header via pipe (mirrors Helix % + :pipe approach — no external file writes)
 function! s:Apply42Header()
-  execute '%!python3 ~/.config/helix/scripts/42header_pipe.py ' . shellescape(expand('%:p'))
+  execute '%!python3 ' . shellescape(expand('~/.config/helix/scripts/42header_pipe.py')) . ' ' . shellescape(expand('%:p'))
 endfunction
 nnoremap <silent> <F1> :call <SID>Apply42Header()<CR>
