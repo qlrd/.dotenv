@@ -44,7 +44,8 @@ skip-levels = 1
 [keys.normal]
 F1 = [
     ":write",
-    ":sh python3 ~/.config/helix/scripts/42header.py \"%{file_path_absolute}\"",
+    ":sh echo \"%{file_path_absolute}\" > ~/.cache/helix/file_path_absolute",
+    ":sh bash ~/.config/helix/scripts/42header.sh",
     ":reload"
 ]
 C-g = [
