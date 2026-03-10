@@ -32,6 +32,9 @@ alias hx='helix'
 alias ll='ls -lah'
 alias la='ls -A'
 
+# Tab width: norminette counts tabs as 4 spaces
+tabs -4
+
 # 42 / C convenience
 alias norm='norminette'
 alias gs='git status -sb'
