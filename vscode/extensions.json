@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "nasanov.42-header",
+    "kube.42header",
+    "ms-vscode.cpptools",
+    "editorconfig.editorconfig",
+    "emeraldwalk.runonsave"
+  ]
+}

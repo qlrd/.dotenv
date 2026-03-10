@@ -1,0 +1,25 @@
+{
+  "editor.insertSpaces": false,
+  "editor.tabSize": 4,
+  "editor.rulers": [
+    80
+  ],
+  "[c]": {
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
+  },
+  "[cpp]": {
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
+  },
+  "42header.username": "${env:FT_LOGIN}",
+  "42header.email": "${env:FT_EMAIL}",
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.(c|h)$",
+        "cmd": "workbench.action.tasks.runTask norminette: current file"
+      }
+    ]
+  }
+}
