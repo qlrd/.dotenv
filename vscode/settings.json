@@ -14,12 +14,11 @@
   },
   "42header.username": "${env:FT_LOGIN}",
   "42header.email": "${env:FT_EMAIL}",
-  "emeraldwalk.runonsave": {
-    "commands": [
-      {
-        "match": "\\.(c|h)$",
-        "cmd": "workbench.action.tasks.runTask norminette: current file"
-      }
+  "triggerTaskOnSave.tasks": {
+    "norminette: current file": [
+      "**/*.c",
+      "**/*.h"
     ]
-  }
+  },
+  "triggerTaskOnSave.on": true
 }

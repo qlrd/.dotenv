@@ -13,11 +13,24 @@
         "isDefault": true
       },
       "presentation": {
-        "reveal": "silent",
+        "reveal": "onProblem",
         "panel": "dedicated",
         "clear": true
       },
-      "problemMatcher": []
+      "problemMatcher": [
+        {
+          "owner": "norminette",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "^(.*):(\\d+):(\\d+):\\s*(Error|Warning):\\s*(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5
+          }
+        }
+      ]
     }
   ]
 }
