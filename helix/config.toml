@@ -9,6 +9,8 @@ auto-save=true
 auto-format=true
 text-width=80
 rulers = [80]
+indent-heuristic = "simple"
+editor-config = true
 gutters = ["line-numbers", "diff", "diagnostics", "spacer"]
 soft-wrap.enable = true
 soft-wrap.max-indent-retain=80
@@ -35,6 +37,9 @@ enable=true
 auto-signature-help=true
 display-messages = true
 display-inlay-hints = true
+
+[editor.smart-tab]
+enable = false
 
 [editor.indent-guides]
 render = true
