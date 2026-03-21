@@ -1,11 +1,17 @@
 # .dotenv
 
-Personal dotfiles for [qlrd](https://github.com/qlrd) — editor configs and shell setup tuned for 42 school / norminette workflow.
+Personal dotfiles for [qlrd](https://github.com/qlrd) — editor, shell, terminal, and Hyprland desktop configs.
 
 ## Structure
 
 ```
 .dotenv/
+├── alacritty/              # Terminal emulator (Catppuccin Mocha, FiraCode Nerd Font)
+│   ├── alacritty.toml
+│   └── helper.toml         # Keybindings helper overlay (transparent, yellow text)
+├── efm-langserver/         # efm-langserver config (norminette LSP for Helix)
+│   └── config.yaml
+├── gitconfig               # Git identity, GPG signing, gh credential helper
 ├── helix/                  # Helix editor
 │   ├── config.toml
 │   ├── languages.toml
@@ -15,8 +21,35 @@ Personal dotfiles for [qlrd](https://github.com/qlrd) — editor configs and she
 │       ├── 42header_pipe.py    # stdin→stdout header script (shared by helix + vim)
 │       ├── 42header.py         # in-place header script (legacy)
 │       └── norminette_wrap.py  # norminette → efm-langserver bridge
-├── efm-langserver/         # efm-langserver config (norminette LSP for Helix)
-│   └── config.yaml
+├── hypr/                   # Hyprland WM
+│   ├── hyprland.conf       # Main config: monitor, input, keybinds, rules
+│   ├── hypridle.conf       # Idle timeouts: dim → lock → dpms off
+│   ├── hyprlock.conf       # Lock screen: Catppuccin, clock, blur
+│   ├── hyprpaper.conf      # Wallpaper per monitor
+│   └── scripts/
+│       ├── random-wallpaper.sh   # Rotate wallpapers from walls/ every hour
+│       ├── nogaps.sh             # Auto gaps: 0 gaps when single window
+│       ├── keybinds-helper.sh    # Alacritty overlay showing keybinds
+│       ├── nm-applet-no-systray.sh
+│       └── reload.sh             # Reload waybar + hyprpaper + hyprland
+├── rofi/                   # App launcher menus
+│   ├── style-1.rasi
+│   ├── bluetooth/
+│   ├── clipboard/
+│   ├── colors/
+│   ├── emoji/
+│   ├── filebrowser/
+│   ├── launchers/
+│   ├── powermenu/
+│   ├── run/
+│   ├── shared/
+│   ├── snippet/
+│   ├── wifi/
+│   └── window/
+├── ssh/
+│   └── config              # SSH host config (Yubikey for github.com)
+├── tmux/
+│   └── tmux.conf           # Catppuccin status bar, sensible defaults
 ├── vim/
 │   └── vimrc               # Vim config — same F1 and norminette features as Helix
 └── zsh/
@@ -36,13 +69,27 @@ export FT_EMAIL="yourlogin@student.42.fr"
 
 Add them to `~/.zshrc.local` on shared machines to avoid committing personal info.
 
-### 2. Zsh
+### 2. Git
+
+```zsh
+cp ~/github/.dotenv/gitconfig ~/.gitconfig
+# then edit [user] fields and signingkey
+```
+
+### 3. SSH
+
+```zsh
+cp ~/github/.dotenv/ssh/config ~/.ssh/config
+chmod 700 ~/.ssh && chmod 600 ~/.ssh/config
+```
+
+### 4. Zsh
 
 ```zsh
 ln -sf ~/github/.dotenv/zsh/zshrc ~/.zshrc
 ```
 
-### 3. Helix
+### 5. Helix
 
 ```zsh
 mkdir -p ~/.config/helix/themes ~/.cache/helix
@@ -52,7 +99,7 @@ ln -sf ~/github/.dotenv/helix/themes/onedark_transparent.toml ~/.config/helix/th
 ln -sf ~/github/.dotenv/helix/scripts ~/.config/helix/scripts
 ```
 
-### 4. efm-langserver (norminette inline diagnostics for Helix)
+### 6. efm-langserver (norminette inline diagnostics for Helix)
 
 Install:
 
@@ -67,13 +114,58 @@ mkdir -p ~/.config/efm-langserver
 ln -sf ~/github/.dotenv/efm-langserver/config.yaml ~/.config/efm-langserver/config.yaml
 ```
 
-### 5. Vim
+### 7. Vim
 
 ```zsh
 ln -sf ~/github/.dotenv/vim/vimrc ~/.vimrc
 ```
 
 Install [vim-plug](https://github.com/junegunn/vim-plug), then run `:PlugInstall` in vim to get ALE.
+
+### 8. Alacritty
+
+```zsh
+mkdir -p ~/.config/alacritty
+ln -sf ~/github/.dotenv/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
+ln -sf ~/github/.dotenv/alacritty/helper.toml ~/.config/alacritty/helper.toml
+```
+
+### 9. Tmux
+
+```zsh
+mkdir -p ~/.config/tmux
+ln -sf ~/github/.dotenv/tmux/tmux.conf ~/.config/tmux/tmux.conf
+```
+
+### 10. Hyprland
+
+```zsh
+mkdir -p ~/.config/hypr/scripts ~/.config/hypr/walls
+ln -sf ~/github/.dotenv/hypr/hyprland.conf ~/.config/hypr/hyprland.conf
+ln -sf ~/github/.dotenv/hypr/hypridle.conf ~/.config/hypr/hypridle.conf
+ln -sf ~/github/.dotenv/hypr/hyprlock.conf ~/.config/hypr/hyprlock.conf
+ln -sf ~/github/.dotenv/hypr/hyprpaper.conf ~/.config/hypr/hyprpaper.conf
+ln -sf ~/github/.dotenv/hypr/scripts/random-wallpaper.sh ~/.config/hypr/scripts/
+ln -sf ~/github/.dotenv/hypr/scripts/nogaps.sh ~/.config/hypr/scripts/
+ln -sf ~/github/.dotenv/hypr/scripts/keybinds-helper.sh ~/.config/hypr/scripts/
+ln -sf ~/github/.dotenv/hypr/scripts/nm-applet-no-systray.sh ~/.config/hypr/scripts/
+ln -sf ~/github/.dotenv/hypr/scripts/reload.sh ~/.config/hypr/scripts/
+# add wallpapers to ~/.config/hypr/walls/
+```
+
+### 11. Waybar
+
+```zsh
+mkdir -p ~/.config/waybar
+ln -sf ~/github/.dotenv/waybar/config.jsonc ~/.config/waybar/config.jsonc
+ln -sf ~/github/.dotenv/waybar/style.css ~/.config/waybar/style.css
+```
+
+### 12. Rofi
+
+```zsh
+ln -sf ~/github/.dotenv/rofi ~/.config/rofi
+```
 
 ## Features
 
@@ -133,6 +225,39 @@ Press `F1` in Helix or Vim to insert or update the 42 school header.
 | Tab width | 4 |
 | Max line length | 80 |
 
+### Alacritty
+
+| Feature | Detail |
+|---------|--------|
+| Theme | Catppuccin Mocha |
+| Font | FiraCode Nerd Font, size 12 |
+| Opacity | 0.69 with `decorations = none` |
+| Padding | 20px x/y |
+| `helper.toml` | Alternate color profile for keybinds overlay (0.15 opacity) |
+
+### Tmux
+
+| Feature | Detail |
+|---------|--------|
+| Theme | Catppuccin Mocha (manual, no plugin required) |
+| Base index | 1 (windows and panes) |
+| Mouse | Enabled |
+| Status | Session name, window list, hostname, time, date |
+| History | 10,000 lines |
+| RGB | True color + extended keys |
+
+### Hyprland
+
+| Feature | Detail |
+|---------|--------|
+| Monitor | Auto preferred, auto position |
+| Input | Brazilian ABNT2 + Corne keyboard in US intl |
+| Idle | Dim at 2.5 min → lock at 5 min → DPMS off at 5.5 min |
+| Lock | hyprlock with Catppuccin, clock, blurred bg |
+| Wallpaper | Random rotation from `walls/` every hour via hyprpaper |
+| Gaps | Auto: 0 gaps when single window, 5/10 with multiple |
+| Startup | alacritty (ws1), librewolf (ws2), veracrypt + keepassxc (ws3) |
+
 ## Dependencies
 
 | Tool | Install |
@@ -141,3 +266,12 @@ Press `F1` in Helix or Vim to insert or update the 42 school header.
 | [norminette](https://github.com/42School/norminette) | `pip install norminette` |
 | [efm-langserver](https://github.com/mattn/efm-langserver) | `go install github.com/mattn/efm-langserver@latest` |
 | [vim-plug](https://github.com/junegunn/vim-plug) | see link |
+| [Alacritty](https://alacritty.org) | `pacman -S alacritty` |
+| [Tmux](https://github.com/tmux/tmux) | `pacman -S tmux` |
+| [Hyprland](https://hyprland.org) | `pacman -S hyprland` |
+| [hyprpaper](https://github.com/hyprwm/hyprpaper) | `pacman -S hyprpaper` |
+| [hyprlock](https://github.com/hyprwm/hyprlock) | `pacman -S hyprlock` |
+| [hypridle](https://github.com/hyprwm/hypridle) | `pacman -S hypridle` |
+| [waybar](https://github.com/Alexays/Waybar) | `pacman -S waybar` |
+| [rofi-wayland](https://github.com/lbonn/rofi) | `pacman -S rofi-wayland` |
+| [FiraCode Nerd Font](https://www.nerdfonts.com) | `pacman -S ttf-firacode-nerd` |
