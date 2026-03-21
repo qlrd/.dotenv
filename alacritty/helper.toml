@@ -1,0 +1,29 @@
+# Hyprland keybindings helper overlay
+# Transparent background, yellow text, no chrome
+
+[colors.primary]
+background = "#1E1E2E"
+foreground = "#F9E2AF"
+
+[font]
+size = 12
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style  = "Regular"
+
+[font.bold]
+family = "FiraCode Nerd Font Propo"
+style  = "Bold"
+
+[font.italic]
+family = "FiraCode Nerd Font SemBd"
+style  = "Italic"
+
+[window]
+decorations = "none"
+opacity     = 0.15
+
+[window.padding]
+x = 32
+y = 24

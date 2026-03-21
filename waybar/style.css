@@ -1,0 +1,224 @@
+* {
+    border: none;
+    font-size: 14px;
+    font-family: "JetBrainsMono Nerd Font,JetBrainsMono NF";
+    min-height: 25px;
+}
+
+window#waybar {
+  background: transparent;
+  margin: 5px;
+}
+
+/* Logo module */
+#custom-logo {
+  padding: 0 10px;
+  color: #cba6f7;
+}
+
+/* Module containers */
+.modules-right {
+  padding-left: 5px;
+  border-radius: 15px 0 0 15px;
+  margin-top: 2px;
+  background: #1e1e2e;
+}
+
+.modules-center {
+  padding: 0 15px;
+  margin-top: 2px;
+  border-radius: 15px 15px 15px 15px;
+  background: #1e1e2e;
+}
+
+.modules-left {
+  border-radius: 0 15px 15px 0;
+  margin-top: 2px;
+  background: #1e1e2e;
+}
+
+/* Default text color for all modules */
+#battery,
+#custom-clipboard,
+#custom-colorpicker,
+#custom-powerDraw,
+#bluetooth,
+#pulseaudio,
+#network,
+#disk,
+#memory,
+#backlight,
+#cpu,
+#temperature,
+#custom-weather,
+#idle_inhibitor,
+#jack,
+#tray,
+#window,
+#workspaces,
+#clock,
+#mpd,
+#updates {
+  color: #cdd6f4;
+  padding: 0 5px;
+  transition: background-color 0.3s;
+}
+
+/* Custom launcher buttons */
+#custom-apps,
+#custom-terminal,
+#custom-filemanager,
+#custom-screenshot,
+#custom-sysmonitor,
+#custom-display,
+#custom-powermenu {
+  color: #74c7ec;
+  padding: 0 6px;
+  transition: all 0.3s;
+}
+
+/* Launcher hover states */
+#custom-apps:hover,
+#custom-terminal:hover,
+#custom-filemanager:hover,
+#custom-screenshot:hover,
+#custom-sysmonitor:hover,
+#custom-display:hover,
+#custom-powermenu:hover {
+  color: #cdd6f4;
+  background: #313244;
+  border-radius: 8px;
+}
+
+/* Module-specific accent colors */
+#clock {
+  color: #b4befe;
+}
+
+#cpu {
+  color: #fab387;
+}
+
+#memory {
+  color: #89b4fa;
+}
+
+#disk {
+  color: #74c7ec;
+}
+
+#temperature {
+  color: #f9e2af;
+}
+
+#temperature.critical {
+  color: #f38ba8;
+  animation: blink 0.75s infinite;
+}
+
+#battery {
+  color: #a6e3a1;
+}
+
+#battery.warning {
+  color: #f9e2af;
+}
+
+#battery.critical {
+  color: #f38ba8;
+  animation: blink 0.75s infinite;
+}
+
+#network {
+  color: #94e2d5;
+}
+
+#bluetooth {
+  color: #89dceb;
+}
+
+#bluetooth.connected {
+  color: #89dceb;
+}
+
+#pulseaudio {
+  color: #cba6f7;
+  padding-top: 3px;
+}
+
+#pulseaudio.muted {
+  color: #f38ba8;
+  padding-top: 0;
+}
+
+#backlight {
+  color: #f9e2af;
+}
+
+#idle_inhibitor {
+  color: #cdd6f4;
+}
+
+#idle_inhibitor.activated {
+  color: #fab387;
+}
+
+#mpd {
+  color: #f5c2e7;
+}
+
+#window {
+  color: #bac2de;
+}
+
+#workspaces {
+  color: #cdd6f4;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  color: #cdd6f4;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+#workspaces button.active {
+  color: #b4befe;
+  border-bottom: 2px solid #b4befe;
+}
+
+#workspaces button:hover {
+  background: #313244;
+  border-radius: 6px;
+}
+
+/* Interactive module hover states */
+#battery:hover,
+#network:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#temperature:hover,
+#clock:hover,
+#custom-clipboard:hover,
+#custom-colorpicker:hover,
+#custom-weather:hover,
+#idle_inhibitor:hover,
+#mpd:hover,
+#window:hover,
+#updates:hover {
+  background: #313244;
+  border-radius: 8px;
+}
+
+/* Blink animation for critical states */
+@keyframes blink {
+    to {
+        background-color: #45475a;
+        color: #cdd6f4;
+    }
+}

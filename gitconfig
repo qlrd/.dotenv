@@ -1,0 +1,19 @@
+[init]
+	defaultBranch = main
+[user]
+	email = qlrddev@proton.me
+	name = qlrd
+	signingkey = 0x66CE71FD488A501C
+[commit]
+	gpgsign = true
+[pull]
+	rebase = true
+[core]
+	editor = vim
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential]
