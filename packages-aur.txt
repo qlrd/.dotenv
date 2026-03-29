@@ -19,6 +19,7 @@ python-steam 1.6.1-1
 rofi-emoji-git-debug r87.794fecf-1
 rofi-emoji-git r87.794fecf-1
 sddm-sugar-candy-git 1.6r42.d31dbf5-1
+steam 1.0.0.85-5
 swaylock-effects-git r470.496059a-1
 tor-browser-bin 15.0.5-1
 vial-appimage 0.7.5-2
