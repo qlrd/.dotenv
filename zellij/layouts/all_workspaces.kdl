@@ -1,0 +1,78 @@
+// Optimized layout for 28" Monitor - More space for multiple panes
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    tab name="AI & Terminal" focus=true {
+        pane split_direction="horizontal" {
+            pane size="70%" split_direction="vertical" {
+                pane size="50%" {
+                    name "AI Assistant"
+                    focus true
+                }
+                pane size="50%" {
+                    name "Editor"
+                }
+            }
+            pane size="30%" {
+                name "Terminal"
+            }
+        }
+    }
+
+    tab name="System Information" {
+        pane split_direction="vertical" {
+            pane split_direction="horizontal" {
+                pane {
+                    name "System Monitor"
+                    command "zsh"
+                    args "-c" "echo 'System Monitor - Press Ctrl+C to exit htop'; htop || zsh"
+                }
+                pane {
+                    name "Process Monitor"
+                    command "zsh"
+                    args "-c" "echo 'Process Monitor'; watch -n 2 'ps aux --sort=-%cpu | head -20' || zsh"
+                }
+            }
+            pane split_direction="horizontal" {
+                pane {
+                    name "System Logs"
+                    command "zsh"
+                    args "-c" "echo 'System Logs'; tail -f /var/log/syslog || journalctl -f || zsh"
+                }
+                pane {
+                    name "Notes"
+                    command "zsh"
+                    args "-c" "echo 'Notes - Use vim or nano to edit'; vim ~/zellij_notes.txt || nano ~/zellij_notes.txt || zsh"
+                }
+            }
+        }
+    }
+
+    tab name="Development" {
+        pane split_direction="vertical" {
+            pane {
+                name "Code Editor"
+            }
+            pane split_direction="horizontal" {
+                pane {
+                    name "File Explorer"
+                    command "zsh"
+                    args "-c" "echo 'File Explorer'; ranger || mc || ls -la || zsh"
+                }
+                pane {
+                    name "Git Status"
+                    command "zsh"
+                    args "-c" "echo 'Git Status'; watch -n 5 'git status --porcelain || echo \"Not a git repository\"' || zsh"
+                }
+            }
+        }
+    }
+}

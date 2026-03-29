@@ -1,0 +1,13 @@
+git:
+  overrideGpg: true
+customCommands:
+  - key: "B"
+    context: "files"
+    command: "git absorb --and-rebase"
+    description: "Absorb staged changes into matching prior commits"
+    loadingText: "Absorbing..."
+  - key: "B"
+    context: "commits"
+    command: "git absorb --and-rebase"
+    description: "Absorb staged changes into matching prior commits"
+    loadingText: "Absorbing..."
