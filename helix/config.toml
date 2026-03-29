@@ -56,7 +56,11 @@ F1 = [
     "select_all",
     ":pipe python3 ~/.config/helix/scripts/42header_pipe.py \"$(cat ~/.cache/helix/file_path_absolute | tr -d '\\n')\""
 ]
-C-g = [
+# C-g: Git menu (lazygit-inspired)
+# L = lazygit, a = add, A = amend, m = commit message, s = signoff, S = sign
+# p = push, P = pull, b = branch, l = log, d = diff, D = diff staged, r = reset, R = rebase, t = stash, T = stash pop, f = fetch
+# B = absorb (auto-fixup staged changes into prior commits)
+C-g = { L = [
     ":sh echo \"%{%}\" > ~/.cache/helix/file_path_absolute",
     ":write-all",
     ":new",
@@ -66,7 +70,53 @@ C-g = [
     ":set mouse true",
     ":redraw",
     ":reload-all"
-]
+], a = [
+    ":write-all",
+    ":sh git add -A"
+], A = [
+    ":write-all",
+    ":sh git commit --amend --no-edit"
+], m = [
+    ":write-all",
+    ":sh git commit"
+], s = [
+    ":write-all",
+    ":sh git commit --signoff"
+], S = [
+    ":write-all",
+    ":sh git commit -S"
+], p = [
+    ":sh git push"
+], P = [
+    ":sh git pull"
+], b = [
+    ":new",
+    ":insert-output git branch -a --color=never",
+    ":set-option bufferline always"
+], l = [
+    ":new",
+    ":insert-output git log --oneline -30"
+], d = [
+    ":new",
+    ":insert-output git diff"
+], D = [
+    ":new",
+    ":insert-output git diff --staged"
+], r = [
+    ":sh git checkout -- ."
+], R = [
+    ":sh git rebase --continue"
+], t = [
+    ":write-all",
+    ":sh git stash"
+], T = [
+    ":sh git stash pop"
+], f = [
+    ":sh git fetch --all"
+], B = [
+    ":write-all",
+    ":sh git absorb --and-rebase"
+] }
 
 [keys.insert]
 A-ret = ["insert_newline", ":insert-output printf ' * '"]

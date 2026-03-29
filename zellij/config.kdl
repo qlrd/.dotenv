@@ -1,0 +1,37 @@
+// Zellij configuration for 28" Monitor
+theme "default"
+
+// Set the default layout to your custom workspace layout
+default_layout "all_workspaces"
+
+session_serialization true
+serialized_session true
+session_restore "maximized"
+
+default_shell "zsh"
+
+mouse_mode true
+scroll_buffer_size 10000
+
+// Keybindings
+keybinds {
+    normal {
+        bind "Ctrl a" { SwitchToMode "Session"; }
+        bind "Ctrl r" { SwitchToMode "Resize"; }
+        bind "Ctrl p" { SwitchToMode "Pane"; }
+        bind "Ctrl t" { SwitchToMode "Tab"; }
+        bind "Ctrl n" { SwitchToMode "Normal"; }
+
+        // Tab shortcuts for quick workspace switching
+        bind "Alt 1" { GoToTab 1; }
+        bind "Alt 2" { GoToTab 2; }
+        bind "Alt 3" { GoToTab 3; }
+    }
+
+    session {
+        bind "Ctrl d" { Detach; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Normal"; }
+        bind "Ctrl q" { Quit; }
+    }
+}
