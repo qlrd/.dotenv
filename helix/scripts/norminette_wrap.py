@@ -5,11 +5,12 @@ Output format: filename:line:col:severity:message
   severity: E (error) | W (warning/notice)
 """
 
+import os
 import re
 import subprocess
 import sys
 
-NORMINETTE = "/home/qlrd/.piscinne/bin/norminette"
+NORMINETTE = os.path.expanduser("~/.piscinne/bin/norminette")
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 PATTERN = re.compile(
     r"^(Error|Notice): \w+\s+\(line:\s*(\d+), col:\s*(\d+)\):\s*(.+)$"
