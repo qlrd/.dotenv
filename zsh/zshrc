@@ -132,7 +132,9 @@ export VISUAL="${VISUAL:-$EDITOR}"
 
 alias v='vim'
 alias vi='vim'
-alias hx='helix'
+# helix: alias only if binary is named 'helix' (source builds);
+# on macOS/Homebrew the binary is already 'hx'
+command -v helix &>/dev/null && alias hx='helix'
 alias ll='ls -lah'
 alias la='ls -A'
 
