@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+# wg-random — randomly switch WireGuard VPN configurations
+# Usage: wg-random [config-dir]
+#   config-dir defaults to /etc/wireguard
+
+set -euo pipefail
+
+CONFIG_DIR="${1:-/etc/wireguard}"
+MAX_ATTEMPTS="${WG_RANDOM_ATTEMPTS:-5}"
+HANDSHAKE_TIMEOUT="${WG_RANDOM_TIMEOUT:-8}"
+
+# ── helpers ────────────────────────────────────────────────────────────────────
+
+die()  { echo "error: $*" >&2; exit 1; }
+info() { echo "  --> $*"; }
+
+require_root() {
+  [[ $EUID -eq 0 ]] || die "this script must be run as root (use sudo)"
+}
+
+# ── discover configs ───────────────────────────────────────────────────────────
+
+get_configs() {
+  local -a files=()
+  while IFS= read -r -d '' f; do
+    files+=("$(basename "$f" .conf)")
+  done < <(find "$CONFIG_DIR" -maxdepth 1 -name '*.conf' -print0 2>/dev/null)
+  printf '%s\n' "${files[@]}"
+}
+
+# ── detect active wg interfaces ───────────────────────────────────────────────
+
+get_active() {
+  wg show interfaces 2>/dev/null | tr ' ' '\n'
+}
+
+# ── bring down all active tunnels ─────────────────────────────────────────────
+
+disconnect_all() {
+  local active
+  active=$(get_active)
+  if [[ -z "$active" ]]; then
+    info "no active WireGuard tunnels"
+    return
+  fi
+  while IFS= read -r iface; do
+    [[ -z "$iface" ]] && continue
+    info "disconnecting $iface"
+    wg-quick down "$iface" 2>/dev/null || true
+  done <<< "$active"
+}
+
+wait_handshake() {
+  local iface=$1 timeout=$2 deadline hs
+  deadline=$((SECONDS + timeout))
+  while (( SECONDS < deadline )); do
+    hs=$(wg show "$iface" latest-handshakes 2>/dev/null | awk '{print $2; exit}')
+    [[ "${hs:-0}" -gt 0 ]] && return 0
+    sleep 1
+  done
+  return 1
+}
+
+try_connect() {
+  local iface=$1
+  info "connecting to $iface"
+  if ! wg-quick up "$iface"; then
+    wg-quick down "$iface" 2>/dev/null || true
+    return 1
+  fi
+  if ! wait_handshake "$iface" "$HANDSHAKE_TIMEOUT"; then
+    info "$iface: no handshake within ${HANDSHAKE_TIMEOUT}s, tearing down"
+    wg-quick down "$iface" 2>/dev/null || true
+    return 1
+  fi
+  return 0
+}
+
+# ── main ──────────────────────────────────────────────────────────────────────
+
+main() {
+  require_root
+
+  [[ -d "$CONFIG_DIR" ]] || die "config directory not found: $CONFIG_DIR"
+
+  mapfile -t configs < <(get_configs)
+  [[ ${#configs[@]} -eq 0 ]] && die "no .conf files found in $CONFIG_DIR"
+
+  current=$(get_active | head -n1)
+
+  candidates=()
+  for c in "${configs[@]}"; do
+    [[ "$c" == "$current" ]] && continue
+    candidates+=("$c")
+  done
+
+  if [[ ${#candidates[@]} -eq 0 ]]; then
+    candidates=("${configs[@]}")
+  fi
+
+  mapfile -t shuffled < <(printf '%s\n' "${candidates[@]}" | shuf)
+  shuffled=("${shuffled[@]:0:MAX_ATTEMPTS}")
+
+  echo "available configs (${#configs[@]}): ${configs[*]}"
+  [[ -n "$current" ]] && echo "current tunnel:  $current"
+  echo "attempt order:   ${shuffled[*]}"
+  echo
+
+  disconnect_all
+
+  for chosen in "${shuffled[@]}"; do
+    if try_connect "$chosen"; then
+      echo
+      echo "active tunnel:   $(get_active)"
+      wg show "$chosen" 2>/dev/null || true
+      return 0
+    fi
+  done
+
+  if [[ -n "$current" && " ${shuffled[*]} " != *" $current "* ]]; then
+    info "all attempts failed, restoring $current"
+    try_connect "$current" && return 0
+  fi
+
+  die "no working endpoint among: ${shuffled[*]}"
+}
+
+main "$@"

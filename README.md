@@ -167,6 +167,19 @@ ln -sf ~/github/.dotenv/waybar/style.css ~/.config/waybar/style.css
 ln -sf ~/github/.dotenv/rofi ~/.config/rofi
 ```
 
+### 13. WireGuard rotation
+
+Randomly rotates between the `.conf` files in `/etc/wireguard` every 4 hours, verifying the handshake and retrying on dead endpoints.
+
+```zsh
+mkdir -p ~/.local/bin
+ln -sf ~/github/.dotenv/wireguard/wg-random ~/.local/bin/wg-random
+sudo ln -sf ~/.local/bin/wg-random /usr/local/bin/wg-random
+sudo cp ~/github/.dotenv/wireguard/wg-random.{service,timer} /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now wg-random.timer
+```
+
 ## Features
 
 ### Zsh

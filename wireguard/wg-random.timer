@@ -1,0 +1,10 @@
+[Unit]
+Description=Rotate WireGuard VPN every 4 hours
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=240min
+Unit=wg-random.service
+
+[Install]
+WantedBy=timers.target
